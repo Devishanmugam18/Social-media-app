@@ -21,6 +21,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { UserNameAndBioContext } from "../context/UserNameAndBio";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { useEffect } from "react";
+import PostWithSwiper from "../components/PostWithSwiper";
 
 // const myPosts = [
 //   {
@@ -151,6 +152,7 @@ const Profile = () => {
             position: "absolute",
             left: "136px",
             top: { xs: "12.5em" },
+            // margin: { xs: "0 0.5em" },
             // top: ,
             borderRadius: " 90px",
             border: "1px solid black",
@@ -209,61 +211,71 @@ const Profile = () => {
 
       <Box
         display="grid"
-        gridTemplateColumns="Repeat(2,1fr)"
+        gridTemplateColumns="repeat(2,1fr)"
         gap={1}
         sx={{ margin: "15px" }}
       >
         {console.log("Rendering posts:", myPosts)}
-        {myPosts.map((postItem) => (
-          <Box key={postItem._id}>
-            {postItem.media.map((mediaItem) => {
+        {myPosts.flatMap(
+          (postItem) =>
+            // <Box key={postItem._id}>
+            postItem.media.map((mediaItem) => {
               const { caption, likes, id, post } = mediaItem;
+              console.log("Post item:", post);
+              const postUrls = post.flatMap((p) => {
+                return { id: p.id, url: p };
+              });
+              console.log("Post URLs for post", id, ":", postUrls);
+
               return (
                 <Card key={mediaItem.id} sx={{ position: "relative" }}>
-                  <Box sx={{ display: "flex", gap: 1, overflow: "auto" }}>
-                    {post.map((imageUrl, idx) => (
-                      <CardMedia
-                        key={idx}
-                        component="img"
-                        image={imageUrl}
-                        height={215}
-                        sx={{ objectFit: "cover" }}
-                      />
-                    ))}
-                  </Box>
-
-                  {/* })} */}
-
-                  <CardContent
-                    sx={{
-                      position: "absolute",
-                      top: "10em",
-                      color: "white",
-                      padding: "0px 5px",
-                    }}
-                  >
-                    <Typography
-                      variant="body2"
-                      sx={{ color: "white", mb: 0.3 }}
-                    >
-                      {caption}
-                    </Typography>
-                    <Box
+                  {/* <Box sx={{ display: "flex", gap: 2, overflow: "auto" }}> */}
+                  <Box sx={{ width: "100%" }}>
+                    <PostWithSwiper
+                      mediaList={postUrls}
+                      imageCountLabel={true}
+                    />
+                    <CardContent
                       sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 0.5,
+                        position: "absolute",
+                        bottom: "10",
+                        color: "white",
+                        padding: "0px 5px",
                       }}
                     >
-                      <FavoriteIcon fontSize="small" color="#FFFFFF" />
-                      <Typography variant="caption">{likes} </Typography>
-                    </Box>
-                  </CardContent>
+                      <Typography
+                        variant="body2"
+                        sx={{ color: "white", mb: 0.3 }}
+                      >
+                        {caption}
+                      </Typography>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 0.5,
+                        }}
+                      >
+                        <FavoriteIcon fontSize="small" color="#FFFFFF" />
+                        <Typography variant="caption">{likes} </Typography>
+                      </Box>
+                    </CardContent>
+                    {/* //     {post.map((imageUrl, idx) => (
+                //       <CardMedia
+                //         key={idx}
+                //         component="img"
+                //         image={imageUrl}
+                //         height={215}
+                //         sx={{ objectFit: "cover" }}
+                //       />
+                //     ))} */}
+                  </Box>
+                  {/* })} */}
                 </Card>
               );
-            })}
-          </Box>
-        ))}
+            }),
+          /* </Box> */
+        )}
         <AddCircleIcon
           onClick={() => navigate("/create-post")}
           sx={{

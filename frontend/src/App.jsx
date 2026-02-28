@@ -16,6 +16,8 @@ import UserNameAndBioContext from "./context/UserNameAndBio.jsx";
 import UserNameBioProvider from "./context/UserNameAndBio.jsx";
 // import Login from "./components/Login.jsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import PostWithSwiper from "./components/PostWithSwiper.jsx";
+import CarouselDots from "./components/CarouselDots.jsx";
 // import orderDetails from "../components/orderDetails.jsx";
 
 function App() {
@@ -45,6 +47,7 @@ function App() {
               element={<CreatePostPreview />}
             />
             <Route path="/edit-profile" element={<EditProfile />} />
+            <Route path="/carousel-dots" element={<CarouselDots />} />
           </Routes>
         </UserNameBioProvider>
       </GoogleOAuthProvider>

@@ -149,7 +149,13 @@ function EditProfile() {
         >
           <ArrowBackIcon onClick={() => navigate(-1)} />
           <Typography
-            sx={{ fontFamily: "karla", fontWeight: "800", fontSize: "1.25rem" }}
+            variant="button"
+            sx={{
+              textTransform: "capitalize",
+              // fontFamily: "karla",
+              fontWeight: "800",
+              fontSize: "1.25rem",
+            }}
           >
             Edit Profile
           </Typography>

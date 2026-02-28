@@ -55,6 +55,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { UserNameAndBioContext } from "../context/UserNameAndBio";
 import { formatDistanceToNow } from "date-fns";
+import PostWithSwiper from "../components/PostWithSwiper";
+import CarouselDots from "../components/CarouselDots";
 
 const socialMedia = [
   {
@@ -165,6 +167,7 @@ function Feed() {
   useEffect(() => {
     async function fetchAllFeeds() {
       const token = localStorage.getItem("token");
+
       const userInfo = localStorage.getItem("userInfo");
       // setUser(JSON.parse(userInfo));
       try {
@@ -274,14 +277,18 @@ function Feed() {
       </Box>
 
       {/* feeds */}
-      <Typography variant="h5">Feeds</Typography>
+      <Typography variant="h5" sx={{ mb: 1 }}>
+        Feeds
+      </Typography>
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "column",
-          gap: 1,
+          // display: "flex",
+          // alignItems: "center",
+          // justifyContent: "center",
+          // flexDirection: "column",
+          // gap: 1,
+          width: "100%",
+
           // minHeight: "15vh",
         }}
       >
@@ -312,8 +319,15 @@ function Feed() {
             console.log("posted media after map transform", uiItem.postedMedia);
             console.log("uiItem", uiItem);
           }
+          const postUrls = uiItem.postedMedia.flatMap((media) => {
+            return media.item.post.map((url, idx) => ({
+              id: `${media.id}-${idx}`,
+              url,
+            }));
+          });
+          console.log("postUrls", postUrls);
           return (
-            <Box key={doc._id}>
+            <Box key={doc._id} sx={{ mb: 1.5 }}>
               <Card
                 sx={{
                   maxWidth: 345,
@@ -353,42 +367,54 @@ function Feed() {
                         subheader={uiItem.postedTime}
                         // sx={{ p: 0 }}
                       ></CardHeader>
-
-                      <CardContent sx={{ padding: "0 16px" }}>
+                      <Box sx={{ padding: "0 16px" }}>
                         <Typography variant="body2">
                           {media.item.caption}
                         </Typography>
-                        <Typography variant="body2" sx={{ color: "#42a5f5" }}>
+                        {/* <Typography variant="body2" sx={{ color: "#42a5f5" }}>
                           {uiItem.hashTags}
-                        </Typography>
+                        </Typography> */}
+                      </Box>
+                      <CardContent>
+                        {/* <Grid container spacing={1}> */}
+                        {/* {media.item.post.map((url, index) => {
+                            // return (
+                              // <Grid item xs={6} key={index}>
+                              //   <Box
+                              //     sx={
+                              //       {
+                              //         display: "flex",
+                              //         alignItems: "center",
+                              //         justifyContent: "center",
+                              //         gap: "0.5em",
+                              //         padding: "0.8em 0",
+                              //         flex: 1,
 
-                        {media.item.post.map((url, index) => {
-                          return (
-                            <Box
-                              sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                gap: "0.5em",
-                                padding: "0.8em 0",
-                                // sm:{{"padding": "0.8em 0",}}
-                              }}
-                              key={index}
-                            >
-                              <CardMedia
-                                component="img"
-                                // key={index}
-                                image={url}
-                                sx={{
-                                  maxWidth: "304px",
-                                  maxHeight: "168px",
-                                  borderRadius: "12px",
-                                }}
-                              ></CardMedia>
-                              ;
-                            </Box>
-                          );
-                        })}
+                              //       }
+                              //     }
+                              //   >
+                              //   <CardMedia
+                              //     component="img"
+                              //     // key={index}
+                              //     image={url}
+                              //     sx={{
+                              //       // maxWidth: "304px",
+                              //       // maxHeight: "168px",
+                              //       width: "100%",
+                              //       height: "200px",
+                              //       borderRadius: "12px",
+                              //     }}
+                              //   ></CardMedia>
+                              //   </Box>
+                              // </Grid>
+                              // );
+                              })} */}
+                        {/* </Grid> */}
+                        <PostWithSwiper
+                          mediaList={postUrls}
+                          carouselDots={true}
+                        />
+                        {/* <CarouselDots mediaList={postUrls} /> */}
                       </CardContent>
                       {/* <CardFooter> */}
                       <Box

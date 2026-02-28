@@ -10,6 +10,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import PostWithSwiper from "../components/PostWithSwiper";
 
 const CreatePostPreview = () => {
   const navigate = useNavigate();
@@ -120,14 +121,14 @@ const CreatePostPreview = () => {
 
   return (
     <Box sx={{ minHeight: "100vh", px: 2, pb: 6 }}>
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1, mb: 3 }}>
         <IconButton onClick={() => navigate(-1)} sx={{ p: 0 }}>
           <ArrowBackIcon />
         </IconButton>
         <Typography sx={{ fontWeight: 700 }}>New post</Typography>
       </Box>
 
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+      {/* <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
         <Box
           sx={{
             width: 260,
@@ -189,10 +190,15 @@ const CreatePostPreview = () => {
             {activeIndex + 1}/{mediaList.length}
           </Box>
         </Box>
-      </Box>
+      </Box> */}
+      <PostWithSwiper
+        mediaList={mediaList}
+        carouselDots={true}
+        imageCountLabel={true}
+      />
       {/* custom pagination dots below the preview */}
 
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 1, gap: 1 }}>
+      {/* <Box sx={{ display: "flex", justifyContent: "center", mt: 1, gap: 1 }}>
         {mediaList.map((_, idx) => (
           <Box
             key={idx}
@@ -206,7 +212,7 @@ const CreatePostPreview = () => {
             }}
           />
         ))}
-      </Box>
+      </Box> */}
 
       <Box sx={{ mt: 2 }}>
         <TextareaAutosize
