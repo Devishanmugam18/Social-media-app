@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import "./App.css";
 import Button from "@mui/material/Button";
-import GoogleSignUpButton from "./mui_components/googleSignUpButton";
 import SimpleDialogDemo from "./mui_components/SharePostModal";
 import { Route, Routes } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
