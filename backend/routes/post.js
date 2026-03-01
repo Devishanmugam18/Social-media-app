@@ -1,5 +1,5 @@
 const express = require("express");
-const Post = require("../ORMmodels/Post");
+// const Post = require("../ORMmodels/Post");
 const jwt = require("jsonwebtoken");
 const myPosts = require("../ORMmodels/myPosts");
 const feedPosts = require("../ORMmodels/feed");
