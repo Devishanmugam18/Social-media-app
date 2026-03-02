@@ -75,7 +75,7 @@ const CreatePostPreview = () => {
 
       // 1️⃣ Get presigned URL
       const res = await fetch(
-        "http://localhost:3000/post/generate-upload-url",
+        `${import.meta.env.VITE_API_BASE_URL}/post/generate-upload-url`,
         {
           method: "POST",
           headers: {
