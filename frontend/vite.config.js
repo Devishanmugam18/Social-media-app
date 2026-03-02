@@ -6,12 +6,12 @@ export default defineConfig({
   plugins: [react()],
 
   server: {
-    // allowedHosts: [
-    //   "nondomineering-dot-untimidly.ngrok-free.dev",
-    //   "ec2-13-235-246-80.ap-south-1.compute.amazonaws.com",
-    // ],
-    allowedHosts: "all",
-    port: 5173,
+    allowedHosts: [
+      "nondomineering-dot-untimidly.ngrok-free.dev",
+      "ec2-13-201-64-163.ap-south-1.compute.amazonaws.com",
+    ],
+    // allowedHosts: "all",
+    // port: 5173,
     host: "0.0.0.0",
   },
 });
