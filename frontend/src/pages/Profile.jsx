@@ -56,10 +56,11 @@ const Profile = () => {
   useEffect(() => {
     const fetchMyPosts = async () => {
       try {
+        const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
         setLoading(true);
         const token = localStorage.getItem("token");
         const response = await fetch(
-          `http://localhost:3000/post/${userInfo?._id}/getPost`,
+          `${apiBaseUrl}/post/${userInfo?._id}/getPost`,
           {
             // headers: {
             headers: {
