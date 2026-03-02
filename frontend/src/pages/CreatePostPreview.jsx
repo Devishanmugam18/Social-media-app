@@ -104,7 +104,7 @@ const CreatePostPreview = () => {
     }
 
     // 3️⃣ Save post in DB
-    await fetch("http://localhost:3000/post/createPost", {
+    await fetch(`${import.meta.env.VITE_API_BASE_URL}/post/createPost`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
