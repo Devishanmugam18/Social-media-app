@@ -11,6 +11,7 @@ export default defineConfig({
     //   "ec2-13-235-246-80.ap-south-1.compute.amazonaws.com",
     // ],
     allowedHosts: "all",
+    port: 5173,
     host: "0.0.0.0",
   },
 });
