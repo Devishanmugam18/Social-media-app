@@ -10,7 +10,7 @@ const upload = multer({
 // add larger json parser and router-level CORS handling
 router.use(express.json({ limit: "10mb" }));
 router.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+  res.header("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",
