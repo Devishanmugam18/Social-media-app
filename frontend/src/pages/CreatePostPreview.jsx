@@ -34,39 +34,9 @@ const CreatePostPreview = () => {
     );
   }
 
-  // function handleCreatePost() {
-  //   const token = localStorage.getItem("token");
-
-  //   const formattedMedia = [
-  //     {
-  //       id: Date.now(),
-  //       post: mediaList.map((m) => m.url),
-  //       caption,
-  //     },
-  //   ];
-  //   console.log("formattedMedia", formattedMedia);
-  //   fetch("http://localhost:3000/post/createPost", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       ...(token ? { Authorization: `Bearer ${token}` } : {}),
-  //     },
-  //     body: JSON.stringify({
-  //       media: formattedMedia,
-  //     }),
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log("Post created:", data);
-  //       navigate("/profile");
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error creating post:", error);
-  //     });
-  // }
   async function handleCreatePost() {
     const token = localStorage.getItem("token");
-
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
     const uploadedUrls = [];
 
     for (let media of mediaList) {
@@ -74,20 +44,17 @@ const CreatePostPreview = () => {
       const file = await fileResponse.blob();
 
       // 1️⃣ Get presigned URL
-      const res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/post/generate-upload-url`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            fileName: `image-${Date.now()}.jpg`,
-            fileType: file.type,
-          }),
+      const res = await fetch(`${apiBaseUrl}/post/generate-upload-url`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-      );
+        body: JSON.stringify({
+          fileName: `image-${Date.now()}.jpg`,
+          fileType: file.type,
+        }),
+      });
 
       const { uploadUrl, fileUrl } = await res.json();
 
@@ -128,91 +95,11 @@ const CreatePostPreview = () => {
         <Typography sx={{ fontWeight: 700 }}>New post</Typography>
       </Box>
 
-      {/* <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
-        <Box
-          sx={{
-            width: 260,
-            height: 260,
-            borderRadius: 2,
-            overflow: "hidden",
-            position: "relative",
-          }}
-        >
-          <Swiper
-            onSwiper={(s) => (swiperRef.current = s)}
-            onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-            slidesPerView={1}
-            style={{ width: "100%", height: "100%" }}
-          >
-            {mediaList.map((m, idx) => (
-              <SwiperSlide key={m.id || idx}>
-                {m.mediaType === "video" ? (
-                  <video
-                    src={m.url}
-                    controls
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      display: "block",
-                    }}
-                  />
-                ) : (
-                  <img
-                    src={m.url}
-                    alt={`preview-${idx}`}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      display: "block",
-                    }}
-                  />
-                )}
-              </SwiperSlide>
-            ))}
-          </Swiper>
-
-          <Box
-            sx={{
-              position: "absolute",
-              top: 8,
-              right: 8,
-              bgcolor: "rgba(255,255,255,0.95)",
-              px: 1,
-              py: 0.4,
-              borderRadius: 2,
-              fontSize: 12,
-              fontWeight: 700,
-              zIndex: 10,
-            }}
-          >
-            {activeIndex + 1}/{mediaList.length}
-          </Box>
-        </Box>
-      </Box> */}
       <PostWithSwiper
         mediaList={mediaList}
         carouselDots={true}
         imageCountLabel={true}
       />
-      {/* custom pagination dots below the preview */}
-
-      {/* <Box sx={{ display: "flex", justifyContent: "center", mt: 1, gap: 1 }}>
-        {mediaList.map((_, idx) => (
-          <Box
-            key={idx}
-            onClick={() => swiperRef.current?.slideTo(idx)}
-            sx={{
-              width: 8,
-              height: 8,
-              bgcolor: activeIndex === idx ? "#000" : "#ccc",
-              borderRadius: "50%",
-              cursor: "pointer",
-            }}
-          />
-        ))}
-      </Box> */}
 
       <Box sx={{ mt: 2 }}>
         <TextareaAutosize

@@ -77,11 +77,6 @@ function EditProfile() {
           formData.append("coverImage", coverImageFile);
           console.log("Cover image file added to FormData");
         }
-
-        console.log(
-          "Submitting profile update with FormData to:",
-          `${apiBaseUrl}/user/updateProfile`,
-        );
         const res = await fetch(`${apiBaseUrl}/user/updateProfile`, {
           method: "PUT",
           headers: {

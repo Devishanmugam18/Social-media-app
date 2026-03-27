@@ -7,14 +7,10 @@ import {
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-// import GoogleSignUpButton from "../mui_components/googleSignUpButton";
 import { useContext, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-// import { LoginContext } from "../context/LoginContext";
-// import Login from "../components/login";
 import { useNavigate } from "react-router-dom";
 import GoogleIcon from "@mui/icons-material/Google";
-// import { BuggyComponent } from "../App";
 import gridImg1 from "../assets/LoginPage/grid_img1.jpg";
 import gridImg2 from "../assets/LoginPage/grid_img2.jpg";
 import gridImg3 from "../assets/LoginPage/grid_img3.jpg";
@@ -95,8 +91,9 @@ const LoginPage = () => {
           credential: credentialResponse.credential,
         }),
       });
-
+      console.log("response", res);
       const data = await res.json();
+      console.log("data", data);
 
       if (!res.ok) throw new Error(data.msg);
 
@@ -110,7 +107,7 @@ const LoginPage = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{ margin: { md: "0 25em" } }}>
       {/* image gallery */}
       <ImageList variant="masonry" cols={3} gap={8} sx={{ mt: 0, mb: 0 }}>
         {galleryImages.map((image, index) => (
@@ -135,26 +132,49 @@ const LoginPage = () => {
         }}
       >
         <Box sx={{ p: 3 }}>
-          <Typography variant="h5" component="h1" sx={{ color: "black" }}>
-            Vibesnap
-          </Typography>
-          <Typography variant="p" sx={{ color: "black", mt: 5 }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.2em",
+              padding: 0,
+            }}
+          >
+            <Typography
+              variant="h5"
+              component="h1"
+              sx={{ color: "black", fontSize: { sm: "4em" } }}
+            >
+              Vibesnap
+            </Typography>
+          </Box>
+          <Typography
+            variant="p"
+            sx={{ color: "black", mt: 5, fontSize: { sm: "2em" } }}
+          >
             Moments That Matter, Shared Forever.
           </Typography>
         </Box>
-        {/* <Button
-          variant="contained"
-          startIcon={<GoogleIcon />}
-          sx={{ borderRadius: 9, backgroundColor: "black" }}
-          onClick={handleClick}
+
+        <Box
+          sx={{
+            display: "inline-block",
+
+            "& iframe": { backgroundColor: "black" },
+          }}
         >
-          Continue with Google
-        </Button> */}
-        <GoogleLogin
-          clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}
-          onSuccess={handleGoogleSuccess}
-          onError={() => console.log("Login failed")}
-        />
+          <GoogleLogin
+            // sx={{ width: { sm: "20%" } }}
+            theme="filled_black"
+            shape="pill"
+            size="large"
+            // width="50px"
+            clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}
+            onSuccess={handleGoogleSuccess}
+            onError={() => console.log("Login failed")}
+          />
+        </Box>
 
         {/* error boundary practice */}
         {/* <ErrorBoundary fallback={<BuggyComponent />}>

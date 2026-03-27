@@ -116,52 +116,11 @@ const socialMedia = [
   },
 ];
 
-// const postsDetails = [
-//   {
-//     id: 0,
-//     name: "Arav",
-//     profilePic: user1ProfilePic,
-//     postedTime: "2 hours ago",
-//     caption:
-//       "Just arrived in New York City! Excited to explore the sights, sounds, and energy of this amazing place. 🗽",
-//     hashTags: "#NYC #Travel",
-//     likes: 67,
-//     postedMedia: [
-//       {
-//         id: "media0",
-//         url: user1PostImg1,
-//       },
-//       {
-//         id: "media1",
-//         url: user1PostImg2,
-//       },
-//     ],
-//   },
-//   {
-//     id: 1,
-//     name: "Sneha",
-//     profilePic: user2ProfilePic,
-//     postedTime: "1 day ago",
-//     caption:
-//       "Taking a moment to slow down, breathe, and focus on myself. 🌿✨ Self-care isn’t selfish – it’s necessary. 💕",
-//     hashTags: "#SelfCare #MeTime #Wellness",
-//     likes: 68,
-//     postedMedia: [
-//       {
-//         id: "media0",
-//         url: user2PostImg1,
-//       },
-//     ],
-//   },
-// ];
-
 function Feed() {
   const [feedData, setFeedData] = useState([]);
   const [profileDetails, setProfileDetails] = useState([]);
   const [user, setUser] = useState([]);
-  // const [userInfo, setUserInfo] = useContext(UserNameAndBioContext);
 
-  // console.log("feed data state", feedData);
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
@@ -189,11 +148,8 @@ function Feed() {
       } catch (err) {
         console.log("getAllFeed error", err);
       }
-
-      // return response;
     }
 
-    // console.log("getallfeed", );
     fetchAllFeeds();
   }, []);
 
@@ -215,19 +171,15 @@ function Feed() {
       }
     }
     fetchProfileDetails();
-    // console.log("profile details", profileDetails);
   }, []);
 
   const [ModalIsOpen, setModalIsOpen] = useState(false);
   const [copyState, setCopyState] = useState(null);
   const [url, setUrl] = useState(null);
-  // const url = "www.arav.feed/";
-  // const router = useRouter();
   const navigate = useNavigate();
 
   //context name
   const { userInfo, setUserInfo } = useContext(UserNameAndBioContext);
-  // console.log("userInfo.name", userInfo.name);
 
   const handleCopyClipborad = async (url, index) => {
     try {
@@ -250,10 +202,8 @@ function Feed() {
         sx={{
           display: "flex",
           alignItems: "center",
-          // justifyContent: "flexStart",
           gap: "0.5em",
           mb: 4,
-          // ml: "14%",
         }}
       >
         <Avatar src={userInfo.avatar} />
@@ -282,14 +232,7 @@ function Feed() {
       </Typography>
       <Box
         sx={{
-          // display: "flex",
-          // alignItems: "center",
-          // justifyContent: "center",
-          // flexDirection: "column",
-          // gap: 1,
           width: "100%",
-
-          // minHeight: "15vh",
         }}
       >
         {feedData.map((doc, index) => {
@@ -336,28 +279,6 @@ function Feed() {
                   backgroundColor: "#F7EBFF",
                 }}
               >
-                {/* <CardHeader
-                  avatar={<Avatar src={doc.profilePic} />}
-                  title={uiItem.name}
-                  subheader={uiItem.postedTime}
-                  // sx={{ p: 0 }}
-                ></CardHeader>
-                {console.log("posted time", uiItem.postedTime)}
-                <CardContent sx={{ padding: "0 16px" }}>
-                  <Typography variant="body2">{uiItem.caption}</Typography>
-                  <Typography variant="body2" sx={{ color: "#42a5f5" }}>
-                    {uiItem.hashTags}
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "0.5em",
-                      padding: "0.8em 0",
-                      // sm:{{"padding": "0.8em 0",}}
-                    }}
-                  > */}
                 {uiItem.postedMedia.map((media) => {
                   return (
                     <Box key={media.id}>
@@ -376,47 +297,11 @@ function Feed() {
                         </Typography> */}
                       </Box>
                       <CardContent>
-                        {/* <Grid container spacing={1}> */}
-                        {/* {media.item.post.map((url, index) => {
-                            // return (
-                              // <Grid item xs={6} key={index}>
-                              //   <Box
-                              //     sx={
-                              //       {
-                              //         display: "flex",
-                              //         alignItems: "center",
-                              //         justifyContent: "center",
-                              //         gap: "0.5em",
-                              //         padding: "0.8em 0",
-                              //         flex: 1,
-
-                              //       }
-                              //     }
-                              //   >
-                              //   <CardMedia
-                              //     component="img"
-                              //     // key={index}
-                              //     image={url}
-                              //     sx={{
-                              //       // maxWidth: "304px",
-                              //       // maxHeight: "168px",
-                              //       width: "100%",
-                              //       height: "200px",
-                              //       borderRadius: "12px",
-                              //     }}
-                              //   ></CardMedia>
-                              //   </Box>
-                              // </Grid>
-                              // );
-                              })} */}
-                        {/* </Grid> */}
                         <PostWithSwiper
                           mediaList={postUrls}
                           carouselDots={true}
                         />
-                        {/* <CarouselDots mediaList={postUrls} /> */}
                       </CardContent>
-                      {/* <CardFooter> */}
                       <Box
                         sx={{
                           display: "flex",
@@ -461,13 +346,11 @@ function Feed() {
                               display: "flex",
                               alignItems: "center",
                               gap: 0.5,
-                              // justifyContent: "space-between",
                               textTransform: "none",
                             }}
                           >
                             {" "}
                             <ShareIcon
-                              // fontSize="small"
                               variant="rounded"
                               sx={{
                                 color: "black",
@@ -502,12 +385,6 @@ function Feed() {
                               color: "white",
 
                               m: { xs: " 7em 1em", sm: "5em 15em" },
-                              // margin: "auto",
-                              // position: "absolute",
-                              // top: "27%",
-                              // // left: "20%",
-                              // transform: "translate(50%, 50%)",
-                              // width: 300,
                               backgroundColor: "white",
                               color: "black",
                               // border: "2px solid blue",

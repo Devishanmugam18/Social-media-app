@@ -23,21 +23,6 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { useEffect } from "react";
 import PostWithSwiper from "../components/PostWithSwiper";
 
-// const myPosts = [
-//   {
-//     id: 1,
-//     imgUrl: designMeet,
-//     content: "Design meet",
-//     likes: 67,
-//   },
-//   {
-//     id: 2,
-//     imgUrl: workingOnB2B,
-//     content: "Working on a B2B",
-//     likes: 42,
-//   },
-//   { id: 3, imgUrl: parachute, content: "Parachute ❤️", likes: 65 },
-// ];
 const Profile = () => {
   const navigate = useNavigate();
   const { userInfo } = useContext(UserNameAndBioContext);
@@ -86,35 +71,9 @@ const Profile = () => {
     fetchMyPosts();
   }, [userInfo._id]); // Refetch if user ID changes
 
-  // //select images from the gallery
-  // const handleGalleryChange = (e) => {
-  //   const files = Array.from(e.target.files || []);
-  //   if (!files.length) return;
-
-  //   const mapped = files.map((file, idx) => ({
-  //     id: `${file.name}-${file.lastModified}-${idx}`,
-  //     file,
-  //     url: URL.createObjectURL(file), // temporary preview URL[web:15][web:20]
-  //   }));
-
-  //   setGalleryImages((prev) => [...prev, ...mapped]); // thumbnails list
-  //   setSelectedImage(mapped[0].url); // top preview
-  // };
   return (
     <Box>
       <Box sx={{ marginBottom: "-1.5em", position: "relative" }}>
-        {/* <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "0.8em",
-            position: "absolute",
-            top: "0.5em",
-            margin: "0.8em",
-            color: "white",
-          }}
-        > */}
         <ArrowBackIcon
           sx={{
             position: "absolute",
@@ -217,135 +176,61 @@ const Profile = () => {
         sx={{ margin: "15px" }}
       >
         {console.log("Rendering posts:", myPosts)}
-        {myPosts.flatMap(
-          (postItem) =>
-            // <Box key={postItem._id}>
-            postItem.media.map((mediaItem) => {
-              const { caption, likes, id, post } = mediaItem;
-              console.log("Post item:", post);
-              const postUrls = post.flatMap((p) => {
-                return { id: p.id, url: p };
-              });
-              console.log("Post URLs for post", id, ":", postUrls);
+        {myPosts.flatMap((postItem) =>
+          // <Box key={postItem._id}>
+          postItem.media.map((mediaItem) => {
+            const { caption, likes, id, post } = mediaItem;
+            console.log("Post item:", post);
+            const postUrls = post.flatMap((p) => {
+              return { id: p.id, url: p };
+            });
+            console.log("Post URLs for post", id, ":", postUrls);
 
-              return (
-                <Card key={mediaItem.id} sx={{ position: "relative" }}>
-                  {/* <Box sx={{ display: "flex", gap: 2, overflow: "auto" }}> */}
-                  <Box sx={{ width: "100%" }}>
-                    <PostWithSwiper
-                      mediaList={postUrls}
-                      imageCountLabel={true}
-                    />
-                    <CardContent
+            return (
+              <Card key={mediaItem.id} sx={{ position: "relative" }}>
+                {/* <Box sx={{ display: "flex", gap: 2, overflow: "auto" }}> */}
+                <Box sx={{ width: "100%" }}>
+                  <PostWithSwiper mediaList={postUrls} imageCountLabel={true} />
+                  <CardContent
+                    sx={{
+                      position: "absolute",
+                      bottom: "10",
+                      color: "white",
+                      padding: "0px 5px",
+                    }}
+                  >
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "white", mb: 0.3 }}
+                    >
+                      {caption}
+                    </Typography>
+                    <Box
                       sx={{
-                        position: "absolute",
-                        bottom: "10",
-                        color: "white",
-                        padding: "0px 5px",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 0.5,
                       }}
                     >
-                      <Typography
-                        variant="body2"
-                        sx={{ color: "white", mb: 0.3 }}
-                      >
-                        {caption}
-                      </Typography>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 0.5,
-                        }}
-                      >
-                        <FavoriteIcon fontSize="small" color="#FFFFFF" />
-                        <Typography variant="caption">{likes} </Typography>
-                      </Box>
-                    </CardContent>
-                    {/* //     {post.map((imageUrl, idx) => (
-                //       <CardMedia
-                //         key={idx}
-                //         component="img"
-                //         image={imageUrl}
-                //         height={215}
-                //         sx={{ objectFit: "cover" }}
-                //       />
-                //     ))} */}
-                  </Box>
-                  {/* })} */}
-                </Card>
-              );
-            }),
-          /* </Box> */
+                      <FavoriteIcon fontSize="small" color="#FFFFFF" />
+                      <Typography variant="caption">{likes} </Typography>
+                    </Box>
+                  </CardContent>
+                </Box>
+              </Card>
+            );
+          }),
         )}
         <AddCircleIcon
           onClick={() => navigate("/create-post")}
           sx={{
-            position: "absolute",
+            position: "sticky",
             left: "5.7em",
-            top: "15.5em",
+            bottom: "0.1em",
             fontSize: "3em",
+            zIndex: 99,
           }}
         />
-        {/* Preview (top) */}
-        {/* <div style={{ width: "100%", aspectRatio: "1 / 1", background: "#000" }}>
-        {selectedImage && (
-          <img
-            src={selectedImage}
-            alt="preview"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
-        )}
-      </div> */}
-        {/* Gallery section (bottom) */}
-        {/* <div style={{ padding: "8px" }}>
-        <div style={{ display: "flex", alignItems: "center", marginBottom: 8 }}>
-          <span style={{ fontWeight: 600 }}>Gallery</span> */}
-        {/* Camera icon inside gallery header */}
-        {/* <button
-            type="button"
-            onClick={handleCameraOpen}
-            style={{
-              marginLeft: "auto",
-              border: "none",
-              background: "transparent",
-              cursor: "pointer",
-            }}
-          >
-            <CameraAltIcon />
-          </button>
-        </div> */}
-        {/* Thumbnails grid */}
-        {/* <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 4,
-          }}
-        >
-          {galleryImages.map((img) => (
-            <div
-              key={img.id}
-              onClick={() => setSelectedImage(img.url)}
-              style={{ width: "100%", aspectRatio: "1 / 1", cursor: "pointer" }}
-            >
-              <img
-                src={img.url}
-                alt=""
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              />
-            </div>
-          ))}
-        </div> */}
-        {/* </div> */}
-        {/* 
-      <input
-        type="file"
-        accept="image/*"
-        multiple
-        ref={galleryInputRef}
-        style={{ display: "none" }}
-        onChange={(e) => handleGalleryChange(e)}
-      /> */}
       </Box>
     </Box>
   );
